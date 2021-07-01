@@ -21,6 +21,7 @@ namespace QrCodeGenerator.Api
         {
 
             services.AddControllers();
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "QrCodeGenerator.Api", Version = "v1" });
@@ -58,6 +59,10 @@ namespace QrCodeGenerator.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors(
+                options => options.WithOrigins("*").AllowAnyMethod()
+            );
         }
     }
 }
