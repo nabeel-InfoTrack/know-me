@@ -24,7 +24,7 @@ namespace QrCodeGenerator.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetCode([FromQuery]string url)
+        public IActionResult GetCode([FromQuery] string url)
         {
             Bitmap qrCodeImage = GetCodeForConstantText(url);
             //Bitmap qrCodeImage = GetCodeForHomeWiFi();
@@ -37,7 +37,7 @@ namespace QrCodeGenerator.Api.Controllers
         /// <param name="json">JSON from UI</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddEmployee([FromBody]object json)
+        public async Task<IActionResult> AddEmployee([FromBody] object json)
         {
             var str = System.Text.Json.JsonSerializer.Serialize(json);
             var newGuid = Guid.NewGuid();
@@ -51,7 +51,7 @@ namespace QrCodeGenerator.Api.Controllers
         /// <param name="mongoI"></param>
         /// <returns></returns>
         [HttpGet("{mongoId}")]
-        public async Task<IActionResult> GetEmployeeFunFacts([FromRoute]Guid mongoId)
+        public async Task<IActionResult> GetEmployeeFunFacts([FromRoute] Guid mongoId)
         {
             object data = await _mongoRepository.FindByIdAsync<object>(mongoId, "Employees");
             return Ok(data);
@@ -72,9 +72,12 @@ namespace QrCodeGenerator.Api.Controllers
         /// Returns a random fun question.
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> AddFunQuestion()
+        [HttpPost("funQuestion")]
+        public async Task<IActionResult> AddFunQuestion([FromBody] QuestionDto questionDto)
         {
-            return Ok(string.Empty);
+            var str = System.Text.Json.JsonSerializer.Serialize(questionDto);
+            await _mongoRepository.InsertAsync("FunQuestions", str);
+            return Ok();
         }
 
         private static Bitmap GetCodeForConstantText(string url, int pixelsPerModule = 20)

@@ -8,7 +8,7 @@ namespace QrCodeGenerator.Api
     {
         Task<T> FindByIdAsync<T>(Guid id, string collection, CancellationToken cancellationToken = default);
         Task InsertAsync(string collection, string serialisedObj, Guid guid);
-        Task InsertAsync(string collection, string serialisedObj, int id);
+        Task InsertAsync(string collection, string serialisedObj);
         Task InsertAsync<T>(string collection, T value, int id) where T : class;
 
         Task ReplaceAsync(string collection, string serialisedObj, int id);

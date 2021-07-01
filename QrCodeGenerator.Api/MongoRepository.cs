@@ -88,10 +88,10 @@ namespace QrCodeGenerator.Api
         /// <param name="serialisedObj">The serialised object to insert.</param>
         /// <param name="id">The ID of the document.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task InsertAsync(string collection, string serialisedObj, int id)
+        public async Task InsertAsync(string collection, string serialisedObj)
         {
             var col = _database.GetCollection<BsonDocument>(collection);
-            var bson = BsonSerializer.Deserialize<BsonDocument>(serialisedObj).Add(new BsonElement("_id", new BsonInt32(id)));
+            var bson = BsonSerializer.Deserialize<BsonDocument>(serialisedObj);
 
             await col.InsertOneAsync(bson);
         }
