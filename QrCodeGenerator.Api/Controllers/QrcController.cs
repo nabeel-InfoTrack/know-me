@@ -27,7 +27,6 @@ namespace QrCodeGenerator.Api.Controllers
         public IActionResult GetCode([FromQuery] string url)
         {
             Bitmap qrCodeImage = GetCodeForConstantText(url);
-            //Bitmap qrCodeImage = GetCodeForHomeWiFi();
             return File(BitmapToBytes(qrCodeImage), "image/jpeg");
         }
 
@@ -89,17 +88,7 @@ namespace QrCodeGenerator.Api.Controllers
             return qrCodeImage;
         }
 
-        private static Bitmap GetCodeForHomeWiFi(int pixelsPerModule = 20)
-        {
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            PayloadGenerator.WiFi wifiPayload = new PayloadGenerator.WiFi("Lahore", "69051685", PayloadGenerator.WiFi.Authentication.WPA);
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(wifiPayload.ToString(), QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
-            Bitmap qrCodeImage = qrCode.GetGraphic(pixelsPerModule);
-            return qrCodeImage;
-        }
-
-        private static Byte[] BitmapToBytes(Bitmap img)
+        private static byte[] BitmapToBytes(Bitmap img)
         {
             using (MemoryStream stream = new MemoryStream())
             {
