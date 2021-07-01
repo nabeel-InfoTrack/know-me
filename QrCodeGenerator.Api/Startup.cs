@@ -61,7 +61,10 @@ namespace QrCodeGenerator.Api
             });
 
             app.UseCors(
-                options => options.WithOrigins("*").AllowAnyMethod()
+                builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
             );
         }
     }
