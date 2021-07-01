@@ -63,7 +63,7 @@ namespace QrCodeGenerator.Api.Controllers
         [HttpGet("FunQuestion")]
         public async Task<IActionResult> GetFunQuestion()
         {
-            var result = await _mongoRepository.FindRandom<object>("FunQuestions");
+            var result = await _mongoRepository.FindRandom<QuestionDto>("FunQuestions");
             return Ok(result);
         }
 
