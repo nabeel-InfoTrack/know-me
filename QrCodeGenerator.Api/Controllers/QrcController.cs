@@ -41,7 +41,11 @@ namespace QrCodeGenerator.Api.Controllers
             var str = System.Text.Json.JsonSerializer.Serialize(json);
             var newGuid = Guid.NewGuid();
             await _mongoRepository.InsertAsync("Employees", str, newGuid);
-            return Ok(newGuid);
+
+            Bitmap qrCodeImage = GetCodeForConstantText($"https://localhost:44308/api/qrc/{newGuid}");
+            return File(BitmapToBytes(qrCodeImage), "image/jpeg");
+
+            //return Ok(newGuid);
         }
 
         /// <summary>
