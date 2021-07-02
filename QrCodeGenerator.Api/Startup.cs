@@ -25,6 +25,8 @@ namespace QrCodeGenerator.Api
                                   builder =>
                                   {
                                       builder.WithOrigins("*");
+                                      builder.AllowAnyHeader();
+                                      builder.AllowAnyMethod();
                                   });
             });
 
