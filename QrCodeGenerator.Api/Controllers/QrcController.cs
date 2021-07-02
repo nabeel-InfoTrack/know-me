@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QRCoder;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -53,6 +54,13 @@ namespace QrCodeGenerator.Api.Controllers
         public async Task<IActionResult> GetEmployeeFunFacts([FromRoute] Guid mongoId)
         {
             object data = await _mongoRepository.FindByIdAsync<object>(mongoId, "Employees");
+            return Ok(data);
+        }
+
+        [HttpGet("employees")]
+        public async Task<IActionResult> GetAllEmployees()
+        {
+            object data = await _mongoRepository.FindAllAsync<object>("Employees");
             return Ok(data);
         }
 

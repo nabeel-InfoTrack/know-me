@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,6 +7,7 @@ namespace QrCodeGenerator.Api
 {
     public interface IMongoRepository
     {
+        Task<List<T>> FindAllAsync<T>(string collection, CancellationToken cancellationToken = default);
         Task<T> FindByIdAsync<T>(Guid id, string collection, CancellationToken cancellationToken = default);
         Task InsertAsync(string collection, string serialisedObj, Guid guid);
         Task InsertAsync(string collection, string serialisedObj);

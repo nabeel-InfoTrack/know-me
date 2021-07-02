@@ -4,6 +4,7 @@ using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,6 +54,16 @@ namespace QrCodeGenerator.Api
             return result is null
                 ? default
                 : BsonSerializer.Deserialize<T>(result);
+        }
+
+        public async Task<List<T>> FindAllAsync<T>(string collection, CancellationToken cancellationToken = default)
+        {
+            var result = (await _database.GetCollection<BsonDocument>(collection).FindAsync(Builders<BsonDocument>.Filter.Empty)).ToList(cancellationToken);
+            //return result is null
+            //    ? default
+            //    : BsonSerializer.Deserialize<List<T>>(result);
+            return result.Select(r => BsonSerializer.Deserialize<T>(r)).ToList();
+            
         }
 
         public async Task<T> FindRandom<T>(string collection, CancellationToken cancellationToken = default)
